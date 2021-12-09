@@ -34,7 +34,7 @@ class App extends Component {
         //导入abi文件
         const abi = require("./contract.abi.json")
         //定义合约地址
-        const address = "0xF22277851468603d581caFF1aa3F279dba8ADB2E"
+        const address = "0x3dd76251cee70ff6fe7741dd0d4b75cdb879257e"
         //实例化合约
         window.myContract = new web3.eth.Contract(abi.abi,address)
         console.log(window.myContract)
@@ -81,7 +81,7 @@ GetterPendingItem = () => {
 //用户可以取出来的token数量
 window.myContract.methods.withrawable(window.defaultAccount).call({from:window.defaultAccount}).then(value=>{
   console.log(value)
-  this.setState({withrawable:value * Math.pow(10,-18)})
+  this.setState({withrawable:value * Math.pow(10,-6)})
 })
 }
 
@@ -94,10 +94,10 @@ Harvest =() =>{
   .on('confirmation',(confirmationNumber,receipt)=>{
     console.log({ confirmationNumber: confirmationNumber, receipt: receipt })
     //刷新待释放数据
-    if(confirmationNumber ==21){
+    if(confirmationNumber === 21){
       window.myContract.methods.withrawable(window.defaultAccount).call({from:window.defaultAccount}).then(value=>{
         console.log(value)
-        this.setState({withrawable:value * Math.pow(10,-18)})
+        this.setState({withrawable:value * Math.pow(10,-6)})
       })
     }
   })
